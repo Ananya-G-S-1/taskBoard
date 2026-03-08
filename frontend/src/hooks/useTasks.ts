@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { fetchTasks } from "../services/taskService"
 import { socketService } from "../services/socketService"
-import { Task } from "../types/Task"
+import { Task } from "../types/task"
 
 export function useTasks() {
 
