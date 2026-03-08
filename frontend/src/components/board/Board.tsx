@@ -16,7 +16,11 @@ export default function Board(){
     const res = await fetch(API)
     const data = await res.json()
 
-    setTasks(data)
+    if(Array.isArray(data)){
+        setTasks(data)
+    }else{
+        setTasks([])
+    }
 
   }
 

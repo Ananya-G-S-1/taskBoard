@@ -5,15 +5,25 @@ const router = Router()
 
 // GET TASKS
 router.get("/tasks", async (req, res) => {
+
   try {
+
     const tasks = await prisma.task.findMany({
       orderBy: { position: "asc" }
     })
-    res.json(tasks)
-  } catch (err) {
-    console.error(err)
-    res.status(500).json({ error: "Failed to fetch tasks" })
+
+    res.json(tasks || [])
+
+  } catch (error) {
+
+    console.error("FETCH TASK ERROR:", error)
+
+    res.status(500).json({
+      error: "Failed to fetch tasks"
+    })
+
   }
+
 })
 
 // CREATE TASK
