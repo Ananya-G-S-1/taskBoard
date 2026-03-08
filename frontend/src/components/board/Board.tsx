@@ -3,44 +3,42 @@ import CreateTask from "../CreateTask"
 
 const API = "https://taskboard-vyre.onrender.com/api/tasks"
 
-export default function Board(){
+export default function Board() {
 
-  const [tasks,setTasks] = useState<any[]>([])
+  const [tasks, setTasks] = useState<any[]>([])
 
-  useEffect(()=>{
+  useEffect(() => {
     loadTasks()
-  },[])
+  }, [])
 
-  const loadTasks = async ()=>{
+  const loadTasks = async () => {
 
     const res = await fetch(API)
     const data = await res.json()
 
-    if(Array.isArray(data)){
-        setTasks(data)
-    }else{
-        setTasks([])
+    if (Array.isArray(data)) {
+      setTasks(data)
     }
 
   }
 
-  const addTask = (task:any)=>{
-    setTasks(prev=>[...prev,task])
+  const addTask = (task: any) => {
+    setTasks(prev => [...prev, task])
   }
 
-  const columns = ["todo","doing","done"]
+  const columns = ["todo", "doing", "done"]
 
-  return(
+  return (
 
     <div className="board">
 
-      {columns.map(column=>{
+      {columns.map(column => {
 
         const columnTasks = tasks.filter(
-          t=>t.column===column
+          t => t.column === column
         )
 
-        return(
+        return (
 
           <div className="column" key={column}>
 
@@ -51,13 +49,15 @@ export default function Board(){
               onCreated={addTask}
             />
 
-            {columnTasks.map(task=>(
-              <div key={task.id} className="task">
+            {columnTasks.map(task => (
+
+              <div className="task" key={task.id}>
 
                 <h4>{task.title}</h4>
                 <p>{task.description}</p>
 
               </div>
+
             ))}
 
           </div>

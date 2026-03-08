@@ -4,23 +4,27 @@ const API = "https://taskboard-vyre.onrender.com/api/tasks"
 
 export default function CreateTask({ column, onCreated }: any) {
 
-  const [title,setTitle] = useState("")
-  const [description,setDescription] = useState("")
+  const [title, setTitle] = useState("")
+  const [description, setDescription] = useState("")
 
   const handleCreate = async () => {
 
-    if(!title) return
+    if (!title) return
 
-    const res = await fetch(API,{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
+    const res = await fetch(API, {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json"
       },
-      body:JSON.stringify({
+
+      body: JSON.stringify({
         title,
         description,
         column
       })
+
     })
 
     const task = await res.json()
@@ -38,13 +42,13 @@ export default function CreateTask({ column, onCreated }: any) {
       <input
         placeholder="Task title"
         value={title}
-        onChange={(e)=>setTitle(e.target.value)}
+        onChange={(e) => setTitle(e.target.value)}
       />
 
       <textarea
         placeholder="Description"
         value={description}
-        onChange={(e)=>setDescription(e.target.value)}
+        onChange={(e) => setDescription(e.target.value)}
       />
 
       <button onClick={handleCreate}>
