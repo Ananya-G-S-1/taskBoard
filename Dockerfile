@@ -10,6 +10,10 @@ RUN npm install
 
 COPY backend .
 
+# generate prisma client
+RUN npx prisma generate
+
+# build typescript
 RUN npm run build
 
 EXPOSE 10000
