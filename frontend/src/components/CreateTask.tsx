@@ -1,20 +1,29 @@
 import { useState } from "react"
-import { createTask } from "../services/taskService"
 
-export default function CreateTask({column,onCreated}:any){
+const API = "https://taskboard-vyre.onrender.com/api/tasks"
+
+export default function CreateTask({ column, onCreated }: any) {
 
   const [title,setTitle] = useState("")
   const [description,setDescription] = useState("")
 
-  const handleCreate = async ()=>{
+  const handleCreate = async () => {
 
     if(!title) return
 
-    const task = await createTask({
-      title,
-      description,
-      column
+    const res = await fetch(API,{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        title,
+        description,
+        column
+      })
     })
+
+    const task = await res.json()
 
     onCreated(task)
 
@@ -22,7 +31,7 @@ export default function CreateTask({column,onCreated}:any){
     setDescription("")
   }
 
-  return(
+  return (
 
     <div className="create-task">
 

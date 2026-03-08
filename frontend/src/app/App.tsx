@@ -1,16 +1,20 @@
-import Layout from "../components/dashboard/Layout"
 import Board from "../components/board/Board"
+import "./styles/board.css"
 
-function App() {
+export default function App(){
 
-  return (
-    <Layout>
+  return(
 
-      <Board />
+    <div>
 
-    </Layout>
+      <h1 className="title">
+        TaskBoard
+      </h1>
+
+      <Board/>
+
+    </div>
+
   )
 
 }
-
-export default App

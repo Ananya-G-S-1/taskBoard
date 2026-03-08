@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
-import { fetchTasks } from "../../services/taskService"
 import CreateTask from "../CreateTask"
-import TaskCard from "../TaskCard"
+
+const API = "https://taskboard-vyre.onrender.com/api/tasks"
 
 export default function Board(){
 
@@ -12,22 +12,16 @@ export default function Board(){
   },[])
 
   const loadTasks = async ()=>{
-    const data = await fetchTasks()
+
+    const res = await fetch(API)
+    const data = await res.json()
+
     setTasks(data)
+
   }
 
   const addTask = (task:any)=>{
     setTasks(prev=>[...prev,task])
-  }
-
-  const removeTask = (id:string)=>{
-    setTasks(prev=>prev.filter(t=>t.id!==id))
-  }
-
-  const updateLocalTask = (updated:any)=>{
-    setTasks(prev =>
-      prev.map(t => t.id===updated.id ? updated : t)
-    )
   }
 
   const columns = ["todo","doing","done"]
@@ -39,7 +33,7 @@ export default function Board(){
       {columns.map(column=>{
 
         const columnTasks = tasks.filter(
-          t => t.column===column
+          t=>t.column===column
         )
 
         return(
@@ -54,12 +48,12 @@ export default function Board(){
             />
 
             {columnTasks.map(task=>(
-              <TaskCard
-                key={task.id}
-                task={task}
-                onDelete={removeTask}
-                onUpdate={updateLocalTask}
-              />
+              <div key={task.id} className="task">
+
+                <h4>{task.title}</h4>
+                <p>{task.description}</p>
+
+              </div>
             ))}
 
           </div>
