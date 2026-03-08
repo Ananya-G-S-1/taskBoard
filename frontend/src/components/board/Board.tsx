@@ -198,26 +198,24 @@ export default function Board() {
 
                       <div className="task-actions">
 
-                        <button onClick={()=>moveTask(task,"todo")}>
-                          TODO
-                        </button>
+  <select
+    className="status-dropdown"
+    value={task.column}
+    onChange={(e)=>moveTask(task,e.target.value)}
+  >
+    <option value="todo">TODO</option>
+    <option value="doing">DOING</option>
+    <option value="done">DONE</option>
+  </select>
 
-                        <button onClick={()=>moveTask(task,"doing")}>
-                          DOING
-                        </button>
+  <button
+    className="delete-btn"
+    onClick={()=>deleteTask(task.id)}
+  >
+    Delete
+  </button>
 
-                        <button onClick={()=>moveTask(task,"done")}>
-                          DONE
-                        </button>
-
-                        <button
-                          className="delete-btn"
-                          onClick={()=>deleteTask(task.id)}
-                        >
-                          Delete
-                        </button>
-
-                      </div>
+</div>
 
                     </div>
 
