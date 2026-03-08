@@ -1,9 +1,9 @@
 import prisma from "../config/db"
 import { generatePosition } from "../utils/fractionalIndex"
 
-export async function createTask(data) {
+export async function createTask(data: any) {
 
-  const position = await generatePosition(data.column)
+  const position = generatePosition(undefined, undefined)
 
   const task = await prisma.task.create({
     data: {
@@ -17,7 +17,7 @@ export async function createTask(data) {
   return task
 }
 
-export async function updateTask(data) {
+export async function updateTask(data: any) {
 
   const task = await prisma.task.update({
     where: { id: data.id },
@@ -30,10 +30,9 @@ export async function updateTask(data) {
   return task
 }
 
-export async function moveTask(data) {
+export async function moveTask(data: any) {
 
-  const newPosition = await generatePosition(
-    data.column,
+  const newPosition = generatePosition(
     data.before,
     data.after
   )
