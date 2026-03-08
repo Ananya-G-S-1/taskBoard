@@ -1,23 +1,19 @@
-import { socket } from "../socket/socket"
+import { socket } from "../socket/socket";
 
-const queue:any[] = []
+const queue: any[] = [];
 
-export function enqueue(action:any) {
-  queue.push(action)
+export function enqueue(action: any) {
+  queue.push(action);
 }
 
 export function replayQueue() {
+  while (queue.length > 0) {
+    const action = queue.shift();
 
-  while(queue.length > 0) {
-
-    const action = queue.shift()
-
-    socket.emit(action.type, action.data)
-
+    socket.emit(action.type, action.data);
   }
-
 }
 
 socket.on("connect", () => {
-  replayQueue()
-})
+  replayQueue();
+});

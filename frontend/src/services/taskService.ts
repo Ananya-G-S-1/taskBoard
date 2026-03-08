@@ -1,65 +1,57 @@
-const API = "https://taskboard-vyre.onrender.com/api/tasks"
+const API = "https://taskboard-vyre.onrender.com/api/tasks";
 
 export const fetchTasks = async () => {
-
-  const res = await fetch(API)
+  const res = await fetch(API);
 
   if (!res.ok) {
-    throw new Error("Failed to fetch tasks")
+    throw new Error("Failed to fetch tasks");
   }
 
-  return res.json()
-}
+  return res.json();
+};
 
 export const createTask = async (task: {
-  title: string
-  description?: string
-  column: string
+  title: string;
+  description?: string;
+  column: string;
 }) => {
-
   const res = await fetch(API, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(task)
-  })
+    body: JSON.stringify(task),
+  });
 
   if (!res.ok) {
-    throw new Error("Failed to create task")
+    throw new Error("Failed to create task");
   }
 
-  return res.json()
-}
+  return res.json();
+};
 
-export const updateTask = async (
-  id: string,
-  task: any
-) => {
-
+export const updateTask = async (id: string, task: any) => {
   const res = await fetch(`${API}/${id}`, {
     method: "PUT",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(task)
-  })
+    body: JSON.stringify(task),
+  });
 
   if (!res.ok) {
-    throw new Error("Failed to update task")
+    throw new Error("Failed to update task");
   }
 
-  return res.json()
-}
+  return res.json();
+};
 
 export const deleteTask = async (id: string) => {
-
   const res = await fetch(`${API}/${id}`, {
-    method: "DELETE"
-  })
+    method: "DELETE",
+  });
 
   if (!res.ok) {
-    throw new Error("Failed to delete task")
+    throw new Error("Failed to delete task");
   }
-
-}
+};

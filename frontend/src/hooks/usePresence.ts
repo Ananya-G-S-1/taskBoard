@@ -1,16 +1,12 @@
-import { useEffect, useState } from "react"
-import { socket } from "../socket/socket"
+import { useEffect, useState } from "react";
+import { socket } from "../socket/socket";
 
 export function usePresence() {
-
-  const [users, setUsers] = useState<any>({})
+  const [users, setUsers] = useState<any>({});
 
   useEffect(() => {
+    socket.on("presence:update", setUsers);
+  }, []);
 
-    socket.on("presence:update", setUsers)
-
-  }, [])
-
-  return users
-
+  return users;
 }

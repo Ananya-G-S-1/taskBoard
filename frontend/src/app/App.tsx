@@ -1,18 +1,12 @@
-import Board from "../components/board/Board"
-import "../styles/board.css"
+import Board from "../components/board/Board";
+import "../styles/board.css";
 
-export default function App(){
-
-  return(
-
+export default function App() {
+  return (
     <div>
-
       <h1 className="app-title">TaskBoard</h1>
 
-      <Board/>
-
+      <Board />
     </div>
-
-  )
-
+  );
 }

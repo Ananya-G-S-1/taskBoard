@@ -1,90 +1,78 @@
-import { Router } from "express"
-import prisma from "../config/db"
+import { Router } from "express";
+import prisma from "../config/db";
 
-const router = Router()
+const router = Router();
 
 // GET TASKS
 router.get("/tasks", async (req, res) => {
-
   try {
-
     const tasks = await prisma.task.findMany({
-      orderBy: { position: "asc" }
-    })
+      orderBy: { position: "asc" },
+    });
 
-    res.json(tasks || [])
-
+    res.json(tasks || []);
   } catch (error) {
-
-    console.error("FETCH TASK ERROR:", error)
+    console.error("FETCH TASK ERROR:", error);
 
     res.status(500).json({
-      error: "Failed to fetch tasks"
-    })
-
+      error: "Failed to fetch tasks",
+    });
   }
-
-})
+});
 
 // CREATE TASK
 router.post("/tasks", async (req, res) => {
   try {
-
-    const { title, description, column } = req.body
+    const { title, description, column } = req.body;
 
     const task = await prisma.task.create({
       data: {
         title,
         description,
         column,
-        position: Date.now()
-      }
-    })
+        position: Date.now(),
+      },
+    });
 
-    res.json(task)
-
+    res.json(task);
   } catch (err) {
-    console.error(err)
-    res.status(500).json({ error: "Failed to create task" })
+    console.error(err);
+    res.status(500).json({ error: "Failed to create task" });
   }
-})
+});
 
 // UPDATE TASK
 router.put("/tasks/:id", async (req, res) => {
   try {
-
-    const { id } = req.params
-    const { title, description, column } = req.body
+    const { id } = req.params;
+    const { title, description, column } = req.body;
 
     const task = await prisma.task.update({
       where: { id },
-      data: { title, description, column }
-    })
+      data: { title, description, column },
+    });
 
-    res.json(task)
-
+    res.json(task);
   } catch (err) {
-    console.error(err)
-    res.status(500).json({ error: "Failed to update task" })
+    console.error(err);
+    res.status(500).json({ error: "Failed to update task" });
   }
-})
+});
 
 // DELETE TASK
 router.delete("/tasks/:id", async (req, res) => {
   try {
-
-    const { id } = req.params
+    const { id } = req.params;
 
     await prisma.task.delete({
-      where: { id }
-    })
+      where: { id },
+    });
 
-    res.json({ success: true })
-
+    res.json({ success: true });
   } catch (err) {
-    console.error(err)
-    res.status(500).json({ error: "Failed to delete task" })
+    console.error(err);
+    res.status(500).json({ error: "Failed to delete task" });
   }
-})
+});
 
-export default router
+export default router;
