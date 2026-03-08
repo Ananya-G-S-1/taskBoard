@@ -5,6 +5,10 @@ import { registerSocketHandlers } from "./socket/socketHandler"
 
 const app = express()
 
+app.get("/", (req, res) => {
+  res.send("Taskboard backend running")
+})
+
 const server = http.createServer(app)
 
 const io = new Server(server, {

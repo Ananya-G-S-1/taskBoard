@@ -16,7 +16,7 @@ export default function Column({ column }: Props) {
 
       <h2>{column}</h2>
 
-      {tasks.map((task) => (
+      {(tasks || []).map((task) => (
         <TaskCard key={task.id} task={task} />
       ))}
 
