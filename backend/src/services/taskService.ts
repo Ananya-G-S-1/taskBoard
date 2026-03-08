@@ -1,56 +1,30 @@
-import prisma from "../config/db"
-import { generatePosition } from "../utils/fractionalIndex"
+const API = "https://taskboard-vyre.onrender.com/api/tasks"
 
-const API = "https://taskboard-vyre.onrender.com/api"
-
-export async function fetchTasks() {
-  const res = await fetch(`${API}/tasks`)
+export const fetchTasks = async () => {
+  const res = await fetch(API)
   return res.json()
 }
 
-export async function createTask(data: any) {
-
-  const position = generatePosition(undefined, undefined)
-
-  const task = await prisma.task.create({
-    data: {
-      title: data.title,
-      description: data.description,
-      column: data.column,
-      position
-    }
+export const createTask = async (task:any) => {
+  const res = await fetch(API, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(task)
   })
-
-  return task
+  return res.json()
 }
 
-export async function updateTask(data: any) {
-
-  const task = await prisma.task.update({
-    where: { id: data.id },
-    data: {
-      title: data.title,
-      description: data.description
-    }
+export const updateTask = async (id:string, data:any) => {
+  const res = await fetch(`${API}/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
   })
-
-  return task
+  return res.json()
 }
 
-export async function moveTask(data: any) {
-
-  const newPosition = generatePosition(
-    data.before,
-    data.after
-  )
-
-  const task = await prisma.task.update({
-    where: { id: data.id },
-    data: {
-      column: data.column,
-      position: newPosition
-    }
+export const deleteTask = async (id:string) => {
+  await fetch(`${API}/${id}`, {
+    method: "DELETE"
   })
-
-  return task
 }

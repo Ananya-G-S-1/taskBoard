@@ -1,16 +1,19 @@
 import express from "express"
-import * as http from "http"
+import http from "http"
+import cors from "cors"
 import { Server } from "socket.io"
+
+import taskRoutes from "./routes/taskRoutes"
 import { registerSocketHandlers } from "./socket/socketHandler"
-import tasksRouter from "./routes/tasks"
 
 const app = express()
 
-app.get("/", (req, res) => {
-  res.send("Taskboard backend running")
-})
+app.use(cors())
+app.use(express.json())
 
-app.use("/api", tasksRouter)
+// REST API
+app.use("/api", taskRoutes)
+
 const server = http.createServer(app)
 
 const io = new Server(server, {
@@ -21,8 +24,8 @@ io.on("connection", (socket) => {
   registerSocketHandlers(socket, io)
 })
 
-const PORT = process.env.PORT || 10000
+const PORT = process.env.PORT || 3001
 
 server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
+  console.log("Server started")
 })

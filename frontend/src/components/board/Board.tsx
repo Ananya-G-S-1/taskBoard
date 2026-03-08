@@ -1,46 +1,75 @@
-import { DndContext } from "@dnd-kit/core"
-import Column from "./Column"
-import { useTasks } from "../../hooks/useTasks"
-import { socketService } from "../../services/socketService"
+import { useEffect, useState } from "react"
+import { fetchTasks } from "../../services/taskService"
+import CreateTask from "../CreateTask"
+import TaskCard from "../TaskCard"
 
-export default function Board() {
+export default function Board(){
 
-  const { tasks } = useTasks()
+  const [tasks,setTasks] = useState<any[]>([])
 
-  const columns = ["todo", "doing", "done"]
+  useEffect(()=>{
+    loadTasks()
+  },[])
 
-  function handleDragEnd(event:any) {
-
-    const { active, over } = event
-
-    if(!over) return
-
-    socketService.moveTask({
-      id: active.id,
-      column: over.id
-    })
-
+  const loadTasks = async ()=>{
+    const data = await fetchTasks()
+    setTasks(data)
   }
 
-  return (
+  const addTask = (task:any)=>{
+    setTasks(prev=>[...prev,task])
+  }
 
-    <DndContext onDragEnd={handleDragEnd}>
+  const removeTask = (id:string)=>{
+    setTasks(prev=>prev.filter(t=>t.id!==id))
+  }
 
-      <div className="board">
+  const updateLocalTask = (updated:any)=>{
+    setTasks(prev =>
+      prev.map(t => t.id===updated.id ? updated : t)
+    )
+  }
 
-        {columns.map(col => (
+  const columns = ["todo","doing","done"]
 
-          <Column
-            key={col}
-            column={col}
-            tasks={tasks.filter(t => t.column === col)}
-          />
+  return(
 
-        ))}
+    <div className="board">
 
-      </div>
+      {columns.map(column=>{
 
-    </DndContext>
+        const columnTasks = tasks.filter(
+          t => t.column===column
+        )
+
+        return(
+
+          <div className="column" key={column}>
+
+            <h2>{column.toUpperCase()}</h2>
+
+            <CreateTask
+              column={column}
+              onCreated={addTask}
+            />
+
+            {columnTasks.map(task=>(
+              <TaskCard
+                key={task.id}
+                task={task}
+                onDelete={removeTask}
+                onUpdate={updateLocalTask}
+              />
+            ))}
+
+          </div>
+
+        )
+
+      })}
+
+    </div>
 
   )
+
 }
