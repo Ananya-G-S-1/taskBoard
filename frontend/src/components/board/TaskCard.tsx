@@ -1,0 +1,13 @@
+export default function TaskCard({ task }: any) {
+
+  return (
+    <div className="task">
+
+      <h4>{task.title}</h4>
+
+      <p>{task.description}</p>
+
+    </div>
+  )
+
+}

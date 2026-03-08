@@ -1,0 +1,47 @@
+.dashboard {
+  display: flex;
+  height: 100vh;
+  background: #f5f7fb;
+}
+
+.sidebar {
+  width: 220px;
+  background: #1e293b;
+  color: white;
+  padding: 20px;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background: white;
+  padding: 15px 25px;
+  border-bottom: 1px solid #eee;
+}
+
+.content {
+  padding: 20px;
+}
+
+.board {
+  display: flex;
+  gap: 20px;
+}
+
+.column {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  width: 300px;
+}
+
+.task {
+  background: #f1f5f9;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
