@@ -5,8 +5,8 @@ const API = "https://taskboard-vyre.onrender.com/api/tasks"
 
 export default function Board() {
 
-  const [tasks, setTasks] = useState<any[]>([])
-  const [showForm, setShowForm] = useState(false)
+  const [tasks,setTasks] = useState<any[]>([])
+  const [showModal,setShowModal] = useState(false)
 
   const [title,setTitle] = useState("")
   const [description,setDescription] = useState("")
@@ -16,7 +16,7 @@ export default function Board() {
     loadTasks()
   },[])
 
-  const loadTasks = async () => {
+  const loadTasks = async()=>{
 
     const res = await fetch(API)
     const data = await res.json()
@@ -27,9 +27,7 @@ export default function Board() {
 
   }
 
-  const createTask = async () => {
-
-    if(!title) return
+  const createTask = async()=>{
 
     const res = await fetch(API,{
       method:"POST",
@@ -47,12 +45,10 @@ export default function Board() {
 
     setTasks(prev=>[...prev,task])
 
+    setShowModal(false)
+
     setTitle("")
     setDescription("")
-    setColumn("todo")
-
-    setShowForm(false)
-
   }
 
   const deleteTask = async(id:string)=>{
@@ -61,7 +57,7 @@ export default function Board() {
       method:"DELETE"
     })
 
-    setTasks(prev => prev.filter(
+    setTasks(prev=>prev.filter(
       (t:any)=>t.id !== id
     ))
 
@@ -71,53 +67,20 @@ export default function Board() {
 
   return(
 
-    <div>
+    <div className="board-container">
 
       <div className="board-header">
 
+        <h1>TaskBoard</h1>
+
         <button
           className="add-btn"
-          onClick={()=>setShowForm(true)}
+          onClick={()=>setShowModal(true)}
         >
           + Add Task
         </button>
 
       </div>
-
-
-      {showForm &&
-
-        <div className="task-form">
-
-          <input
-            placeholder="Task title"
-            value={title}
-            onChange={(e)=>setTitle(e.target.value)}
-          />
-
-          <textarea
-            placeholder="Description"
-            value={description}
-            onChange={(e)=>setDescription(e.target.value)}
-          />
-
-          <select
-            value={column}
-            onChange={(e)=>setColumn(e.target.value)}
-          >
-            <option value="todo">TODO</option>
-            <option value="doing">DOING</option>
-            <option value="done">DONE</option>
-          </select>
-
-          <button onClick={createTask}>
-            Create Task
-          </button>
-
-        </div>
-
-      }
-
 
       <div className="board">
 
@@ -169,6 +132,53 @@ export default function Board() {
         })}
 
       </div>
+
+
+      {showModal && (
+
+        <div className="modal-overlay">
+
+          <div className="modal">
+
+            <h3>Create Task</h3>
+
+            <input
+              placeholder="Task title"
+              value={title}
+              onChange={(e)=>setTitle(e.target.value)}
+            />
+
+            <textarea
+              placeholder="Description"
+              value={description}
+              onChange={(e)=>setDescription(e.target.value)}
+            />
+
+            <select
+              value={column}
+              onChange={(e)=>setColumn(e.target.value)}
+            >
+              <option value="todo">TODO</option>
+              <option value="doing">DOING</option>
+              <option value="done">DONE</option>
+            </select>
+
+            <button onClick={createTask}>
+              Create Task
+            </button>
+
+            <button
+              className="cancel-btn"
+              onClick={()=>setShowModal(false)}
+            >
+              Cancel
+            </button>
+
+          </div>
+
+        </div>
+
+      )}
 
     </div>
 
