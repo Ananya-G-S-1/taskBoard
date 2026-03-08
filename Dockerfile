@@ -9,9 +9,12 @@ COPY backend/package*.json ./backend/
 WORKDIR /app/backend
 RUN npm install
 
-# copy rest of project
+# copy backend source
 COPY backend ./ 
+
+# build typescript
+RUN npm run build
 
 EXPOSE 10000
 
-CMD ["npm","start"]
+CMD ["node", "dist/server.js"]
