@@ -1,22 +1,13 @@
-import { useEffect } from "react"
-import { socket } from "./socket/socket"
+import Board from "./components/Board"
 
 function App() {
-
-  useEffect(() => {
-    socket.on("connect", () => {
-      console.log("Connected to server")
-    })
-
-    return () => {
-      socket.off("connect")
-    }
-  }, [])
-
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Task Board</h1>
-      <p>Connected to backend via Socket.IO</p>
+    <div style={{ fontFamily: "Arial, sans-serif" }}>
+      <h1 style={{ textAlign: "center", marginTop: "20px" }}>
+        Real-Time Task Board
+      </h1>
+
+      <Board />
     </div>
   )
 }
