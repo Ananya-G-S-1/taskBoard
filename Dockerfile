@@ -16,6 +16,8 @@ COPY backend .
 # generate prisma client using local prisma
 RUN npx prisma generate --schema=prisma/schema.prisma
 
+RUN npx prisma migrate deploy
+
 # build typescript
 RUN npm run build
 
