@@ -36,4 +36,5 @@ export function registerSocketHandlers(socket, io) {
   io.emit("task:deleted", id)
 
 
+})
 }
