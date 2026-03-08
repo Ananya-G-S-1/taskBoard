@@ -44,7 +44,7 @@ app.post("/api/tasks", async (req, res) => {
         title,
         description,
         column,
-        position: Date.now()
+        position: Math.random()
       }
     })
 

@@ -55,32 +55,60 @@ margin-top:8px;
 cursor:pointer;
 }
 
-.modal-overlay{
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:0;
-background:rgba(0,0,0,0.4);
-display:flex;
-justify-content:center;
-align-items:center;
+.app-title{
+margin-left:30px;
 }
 
 .modal{
 background:white;
-padding:25px;
-border-radius:10px;
-width:320px;
+padding:30px;
+border-radius:12px;
+width:420px;
 display:flex;
 flex-direction:column;
 gap:10px;
+box-shadow:0 8px 20px rgba(0,0,0,0.2);
 }
 
-.cancel-btn{
-background:#999;
-color:white;
+.modal input,
+.modal textarea,
+.modal select{
+padding:10px;
+border-radius:6px;
+border:1px solid #ccc;
+font-size:14px;
+width:100%;
+}
+
+.status-select{
+cursor:pointer;
+}
+
+.modal-buttons{
+display:flex;
+gap:10px;
+margin-top:10px;
+}
+
+.create-btn{
+background:#4CAF50;
 border:none;
-padding:8px;
-border-radius:4px;
+color:white;
+padding:10px;
+border-radius:6px;
+cursor:pointer;
+}
+
+.create-btn:hover{
+background:#3d8c40;
+}
+
+.task-card{
+cursor:grab;
+transition:0.2s;
+}
+
+.task-card:active{
+cursor:grabbing;
+transform:scale(1.02);
 }

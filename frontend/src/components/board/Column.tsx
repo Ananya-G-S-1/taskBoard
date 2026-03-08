@@ -3,7 +3,8 @@ import TaskCard from "../TaskCard"
 export default function Column({ column, tasks }: any) {
 
   return (
-    <div className="column">
+
+    <div id={column} className="column">
 
       <h3>{column.toUpperCase()}</h3>
 
@@ -12,6 +13,7 @@ export default function Column({ column, tasks }: any) {
       ))}
 
     </div>
+
   )
 
 }

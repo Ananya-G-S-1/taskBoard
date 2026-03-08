@@ -7,9 +7,7 @@ export default function App(){
 
     <div>
 
-      <h1 className="title">
-        TaskBoard
-      </h1>
+      <h1 className="app-title">TaskBoard</h1>
 
       <Board/>
 
