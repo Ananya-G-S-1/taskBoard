@@ -1,5 +1,5 @@
 import express from "express"
-import http from "http"
+import * as http from "http"
 import { Server } from "socket.io"
 import { registerSocketHandlers } from "./socket/socketHandler"
 
@@ -14,8 +14,8 @@ io.on("connection", (socket) => {
   registerSocketHandlers(socket, io)
 })
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT || 3001;
 
 server.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`)
-})
+  console.log(`Server started on ${PORT}`);
+});
