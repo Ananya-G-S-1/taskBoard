@@ -1,20 +1,17 @@
-# Use Node image
 FROM node:18
 
-# Create app directory
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
+# copy backend package files
+COPY backend/package*.json ./backend/
 
-# Install dependencies
+# install dependencies
+WORKDIR /app/backend
 RUN npm install
 
-# Copy project files
-COPY . .
+# copy rest of project
+COPY backend ./ 
 
-# Expose port
 EXPOSE 10000
 
-# Start the server
-CMD ["npm", "start"]
+CMD ["npm","start"]
