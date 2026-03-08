@@ -1,3 +1,4 @@
+import prisma from "../config/db"
 import { createTask, updateTask, moveTask } from "../services/taskService"
 
 export function registerSocketHandlers(socket, io) {
@@ -25,5 +26,14 @@ export function registerSocketHandlers(socket, io) {
     io.emit("task:moved", result)
 
   })
+
+  socket.on("task:delete", async (id) => {
+
+  await prisma.task.delete({
+    where: { id }
+  })
+
+  io.emit("task:deleted", id)
+
 
 }

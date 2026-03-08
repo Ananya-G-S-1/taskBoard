@@ -1,17 +1,23 @@
-let queue = []
+import { socket } from "../socket/socket"
 
-export function enqueue(action) {
+const queue:any[] = []
+
+export function enqueue(action:any) {
   queue.push(action)
 }
 
-export function replay(socket) {
+export function replayQueue() {
 
-  queue.forEach((action) => {
+  while(queue.length > 0) {
+
+    const action = queue.shift()
 
     socket.emit(action.type, action.data)
 
-  })
-
-  queue = []
+  }
 
 }
+
+socket.on("connect", () => {
+  replayQueue()
+})

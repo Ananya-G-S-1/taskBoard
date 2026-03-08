@@ -2,6 +2,7 @@ import express from "express"
 import * as http from "http"
 import { Server } from "socket.io"
 import { registerSocketHandlers } from "./socket/socketHandler"
+import tasksRouter from "./routes/tasks"
 
 const app = express()
 
@@ -9,6 +10,7 @@ app.get("/", (req, res) => {
   res.send("Taskboard backend running")
 })
 
+app.use("/api", tasksRouter)
 const server = http.createServer(app)
 
 const io = new Server(server, {

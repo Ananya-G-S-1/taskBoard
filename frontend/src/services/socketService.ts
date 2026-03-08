@@ -2,28 +2,36 @@ import { socket } from "../socket/socket"
 
 export const socketService = {
 
-  createTask(data: any) {
+  createTask(data:any) {
     socket.emit("task:create", data)
   },
 
-  updateTask(data: any) {
+  updateTask(data:any) {
     socket.emit("task:update", data)
   },
 
-  moveTask(data: any) {
+  moveTask(data:any) {
     socket.emit("task:move", data)
   },
 
-  onTaskCreated(callback: any) {
-    socket.on("task:created", callback)
+  deleteTask(id:string) {
+    socket.emit("task:delete", id)
   },
 
-  onTaskUpdated(callback: any) {
-    socket.on("task:updated", callback)
+  onTaskCreated(cb:any) {
+    socket.on("task:created", cb)
   },
 
-  onTaskMoved(callback: any) {
-    socket.on("task:moved", callback)
+  onTaskUpdated(cb:any) {
+    socket.on("task:updated", cb)
+  },
+
+  onTaskMoved(cb:any) {
+    socket.on("task:moved", cb)
+  },
+
+  onTaskDeleted(cb:any) {
+    socket.on("task:deleted", cb)
   }
 
 }

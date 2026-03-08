@@ -1,6 +1,13 @@
 import prisma from "../config/db"
 import { generatePosition } from "../utils/fractionalIndex"
 
+const API = "https://taskboard-vyre.onrender.com/api"
+
+export async function fetchTasks() {
+  const res = await fetch(`${API}/tasks`)
+  return res.json()
+}
+
 export async function createTask(data: any) {
 
   const position = generatePosition(undefined, undefined)
